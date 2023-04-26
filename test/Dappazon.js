@@ -91,8 +91,18 @@ describe("Dappazon", () => {
       transaction = await dappazon.connect(buyer).buy(ID, { value: COST });
       await transaction.wait();
       balanceBefore = await ethers.provider.getBalance(deployer.address);
+      //withdraw
       transaction = await dappazon.connect(deployer).withdraw();
       await transaction.wait();
+    });
+    it("Updates the owner balance", async () => {
+      const balanceAfter = await ethers.provider.getBalance(deployer.address);
+      expect(balanceAfter).to.be.greaterThan(balanceBefore);
+    });
+    //the contract should not have hold any balance it should have passed it to the buyer
+    it("updates the contract balance", async () => {
+      const result = await ethers.provider.getBalance(dappazon.address);
+      expect(result).to.equal(0);
     });
   });
 });
