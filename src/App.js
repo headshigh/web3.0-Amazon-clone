@@ -24,7 +24,7 @@ function App() {
     setItem(item);
     toggle ? setToggle(false) : setToggle(true);
   };
-
+  // console.log("dappa contract", Dappazon);
   const loadBlockChainData = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -70,7 +70,7 @@ function App() {
           <Section
             title={"Clothing & Jewelry"}
             items={clothing}
-            tooglePop={togglePop}
+            togglePop={togglePop}
           />
           <Section
             title={"Electronics & Gadgets"}
@@ -78,6 +78,15 @@ function App() {
             togglePop={togglePop}
           />
           <Section title={"Toys & Gaming"} items={toys} togglePop={togglePop} />
+          {toggle && (
+            <Product
+              item={item}
+              provider={provider}
+              account={account}
+              dappazon={Dappazon}
+              togglePop={togglePop}
+            />
+          )}
         </>
       )}
     </div>
